@@ -19,14 +19,14 @@ class TheAtlantic
              "title" => { "literal" => "The Atlantic" },
              "author" => { "literal" => "The Atlantic Monthly Group" } }
 
-    entries = { "id" => link,
-                "updated" => date.merge!({ "repeat" => true }),
-                "title" => selector("h2.hed"),
-                "author" => selector("li.byline"),
-                "link" => link,
-                "summary" => selector("p.dek") }
+    entry = { "id" => link,
+              "updated" => date.merge!({ "repeat" => true }),
+              "title" => selector("h2.hed"),
+              "author" => selector("li.byline"),
+              "link" => link,
+              "summary" => selector("p.dek") }
 
-    rules = { "info" => info, "entries" => entries }
+    rules = { "info" => info, "entry" => entry }
 
     Feedstock.feed url, rules
   end

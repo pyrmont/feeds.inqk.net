@@ -9,7 +9,7 @@ class NewYorker
     date = { "path" => "div[class*=MagazineHeader__header] h2", 
              "type" => "datetime" }
 
-    link = { "path" => selector("div[class*=River__riverItemBody] > a"),
+    link = { "path" => "div[class*=River__riverItemBody] > a",
              "attribute" => "href",
              "prepend" => "https://www.newyorker.com" }
 
@@ -18,19 +18,17 @@ class NewYorker
              "title" => { "literal" => "The New Yorker" },
              "author" => { "literal" => "Condé Nast" } }
 
-    entries = { "id" => link,
-                "updated" => date.merge({ "repeat" => true }),
-                "title" => selector("h4[class*=River__hed]"),
-                "author" => selector("a[rel=author]"),
-                "link" => link,
-                "summary" => selector("h5[class*=River__dek]") }
+    entries = "section > div[class*=Layout__layoutContainer] div[class*=River__riverItemContent]"
 
-    rules = { "info" => info, "entries" => entries }
+    entry = { "id" => link,
+              "updated" => date.merge({ "repeat" => true }),
+              "title" => "h4[class*=River__hed]",
+              "author" => "a[rel=author]",
+              "link" => link,
+              "summary" => "h5[class*=River__dek]" }
+
+    rules = { "info" => info, "entries" => entries, "entry" => entry }
 
     Feedstock.feed url, rules
-  end
-  
-  private def selector(partial)
-    "section > div[class*=Layout__layoutContainer] section[class*=MagazinePageSection] div[class*=River__riverItemContent] #{partial}"
   end
 end
