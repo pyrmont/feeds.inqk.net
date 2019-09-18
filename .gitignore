@@ -1,4 +1,5 @@
 *.swp
+Gemfile.lock
 /tmp/
 /src/.bundle
 /src/vendor/
