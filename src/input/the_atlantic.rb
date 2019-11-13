@@ -33,6 +33,7 @@ class TheAtlantic
   
   private def selector(partial)
     "ul[id*=section-Cover] > li.article #{partial},
-     ul#section-Features > li.article #{partial}"
+     ul#section-Features > li.article #{partial},
+     ul[id*=section-Part] > li.article #{partial}"
   end
 end
