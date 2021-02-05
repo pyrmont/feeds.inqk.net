@@ -2,7 +2,7 @@
 
 require "feedstock"
 
-class Longform_TB
+class LongformTb
   def feed
     url = "https://longform.org/archive/writers/taffy-brodesser-akner"
 
