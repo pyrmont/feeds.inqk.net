@@ -10,16 +10,21 @@ def save(name, contents)
 end
 
 def file_names
-  return Dir.each_child("input") if ARGV.empty?
-  return ARGV.each unless ARGV[0] == "-e"
+  all = Dir.each_child("input").map { |fn| fn.prepend "input/" }
 
-  excluded = ARGV.slice(1..-1)
-  Dir.each_child("input").reject { |fn| excluded.include? fn }
+  if ARGV.empty?
+    all
+  elsif ARGV[0] != "-e"
+    ARGV.each
+  else
+    excluded = ARGV.slice(1..-1)
+    all.reject { |fn| excluded.include? fn }
+  end
 end
 
 file_names.each do |file_name|
-  require_relative "input/#{file_name}"
-  base_name = file_name.delete_suffix(".rb")
+  require_relative file_name
+  base_name = file_name.split("/").last.delete_suffix(".rb")
   class_name = base_name
     .split('_')
     .map(&:capitalize)
