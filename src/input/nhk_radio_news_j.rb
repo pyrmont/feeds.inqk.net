@@ -37,6 +37,6 @@ class NhkRadioNewsJ
   end
 
   def keep?(entry)
-    entry["title"].include? "夜7"
+    entry["title"].include? "朝7"
   end
 end
