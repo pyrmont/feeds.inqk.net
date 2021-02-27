@@ -25,7 +25,8 @@ class NhkRadioNewsJ
     entry = { title: "title",
               description: { literal: "The 7 o'clock news." },
               enclosure: { path: "enclosure",
-                           content: "xml" },
+                           content: "xml",
+                           processor: lambda { |xml, rule| https xml } },
               pubDate: "pubDate",
               guid: "guid",
               itunes_author: "itunes|author",
@@ -34,6 +35,10 @@ class NhkRadioNewsJ
     rules = { info: info, entries: entries, entry: entry }
 
     Feedstock.feed url, rules, :xml, "podcast.xml"
+  end
+
+  def https(xml)
+    xml.gsub "http://", "https://"
   end
 
   def keep?(entry)
