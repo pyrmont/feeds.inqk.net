@@ -4,7 +4,7 @@ require "feedstock"
 
 class NhkRadioNewsJ
   def feed
-    url = "http://www.nhk.or.jp/r-news/podcast/nhkradionews.xml"
+    url = "https://www.nhk.or.jp/s-media/news/podcast/list/v1/all.xml"
 
     info = { title: { literal: "NHK Radio News (Japanese)" },
              link: { literal: "https://www.nhk.or.jp/radionews/" },
