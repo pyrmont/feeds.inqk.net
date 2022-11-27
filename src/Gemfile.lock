@@ -1,0 +1,24 @@
+GIT
+  remote: https://github.com/pyrmont/feedstock.git
+  revision: 9868058f8773072a11ef3db08dea20a30340e371
+  specs:
+    feedstock (0.4.0.pre.dev)
+      nokogiri
+      timeliness
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    nokogiri (1.13.9-x86_64-linux)
+      racc (~> 1.4)
+    racc (1.6.0)
+    timeliness (0.4.4)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  feedstock!
+
+BUNDLED WITH
+   2.3.26
