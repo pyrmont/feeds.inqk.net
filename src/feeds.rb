@@ -30,5 +30,10 @@ file_names.each do |file_name|
     .map(&:capitalize)
     .join
   klass = Object.const_get class_name
-  save "#{base_name}.xml", klass.new.feed
+  begin
+    save "#{base_name}.xml", klass.new.feed
+  rescue => e
+    puts "#{base_name} failed"
+    puts e.message
+  end
 end
