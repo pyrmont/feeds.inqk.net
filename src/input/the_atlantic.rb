@@ -4,7 +4,7 @@ require "feedstock"
 
 class TheAtlantic
   def feed
-    url = "https://theatlantic.com/magazine"
+    url = "https://www.theatlantic.com/magazine/"
 
     date = { path: "h1.c-section-header__title",
              processor: lambda { |date, rule| normalise_date(date) },
