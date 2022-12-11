@@ -29,19 +29,23 @@ def options
     parser.separator ""
     parser.separator "Specific options:"
 
-    parser.on("-i", "--include FILE", "Include rules in FILE.") do |name|
-      @options[:includes].push name
-    end
-
     parser.on("-e", "--exclude FILE", "Exclude rules in FILE.") do |name|
       @options[:excludes].push name
+    end
+
+    parser.on("-i", "--include FILE", "Include rules in FILE.") do |name|
+      @options[:includes].push name
     end
 
     parser.on("-o", "--output-dir DIR", "Use DIR to save outputs. Default: 'outputs'") do |dir|
       @options[:output_dir] = dir
     end
 
-    parser.on("-r", "--rules-dir DIR", "Use DIR as source for rules. Default: 'rules'") do |dir|
+    parser.on("-O", nil, "Output to STDOUT.") do |stdout|
+      @options[:to_stdout] = stdout
+    end
+
+    parser.on("-rDIR", "--rules-dir DIR", "Use DIR as source for rules. Default: 'rules'") do |dir|
       @options[:rules_dir] = dir
     end
 
@@ -80,9 +84,15 @@ file_names(options).each do |file_name|
     .join
   klass = Object.const_get class_name
   begin
-    save "#{options[:output_dir]}/#{base_name}.xml", klass.new.feed
+    if @options[:to_stdout]
+      puts klass.new.feed
+    else
+      Dir.mkdir(options[:output_dir]) unless Dir.exist?(options[:output_dir])
+      save "#{options[:output_dir]}/#{base_name}.xml", klass.new.feed
+    end
   rescue => e
     puts "Failed to parse rules in #{file_name}"
     puts e.message
+    puts e.backtrace
   end
 end

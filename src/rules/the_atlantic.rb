@@ -6,28 +6,33 @@ class TheAtlantic
   def feed
     url = "https://www.theatlantic.com/magazine/"
 
-    date = { path: "main h1",
-             type: "datetime",
-             prepend: "1 " }
+    date = Feedstock::Extract.new(
+      selector: "main h1",
+      absolute: true,
+      prefix: "1 ",
+      type: "datetime"
+    )
 
-    link = { path: "h3 > a",
-             content: { attribute: "href" } }
+    link = Feedstock::Extract.new(
+      selector: "h3 > a",
+      content: { attribute: "href" }
+    )
 
-    info = { id: { literal: url },
+    info = { id: url,
              updated: date,
-             title: { literal: "The Atlantic" },
-             author: { literal: "The Atlantic Monthly Group" } }
-
-    entries = "div[class*=Item_info]"
+             title: "The Atlantic",
+             author: "The Atlantic Monthly Group" }
 
     entry = { id: link,
-              updated: date.merge!({ repeat: true }),
-              title: "h3",
-              author: "a[class*=_authorLink]",
+              updated: date,
+              title: Feedstock::Extract.new(selector: "h3"),
+              author: Feedstock::Extract.new(selector: "a[class*=_authorLink]"),
               link: link,
-              summary: "p" }
+              summary: Feedstock::Extract.new(selector: "p") }
 
-    rules = { info: info, entries: entries, entry: entry }
+    entries = Feedstock::Extract.new(selector: "div[class*=Item_info]")
+
+    rules = { info: info, entry: entry, entries: entries}
 
     Feedstock.feed url, rules
   end

@@ -1,3 +1,4 @@
 source "https://rubygems.org"
 
 gem "feedstock", github: "pyrmont/feedstock"
+# gem "feedstock", path: "~/development/ruby/feedstock"

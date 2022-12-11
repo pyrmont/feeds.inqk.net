@@ -6,28 +6,33 @@ class NewYorker
   def feed
     url = "https://www.newyorker.com/magazine"
 
-    date = { path: "div[class*=MagazineHeader__header] h2",
-             type: "datetime" }
+    date = Feedstock::Extract.new(
+      selector: "div[class*=MagazineHeader__header] h2",
+      absolute: true,
+      type: "datetime"
+    )
 
-    link = { path: "div[class*=River__riverItemBody] > a",
-             content: { attribute: "href" },
-             prepend: "https://www.newyorker.com" }
+    link = Feedstock::Extract.new(
+      selector: "div[class*=River__riverItemBody] > a",
+      content: { attribute: "href" },
+      prefix: "https://www.newyorker.com"
+    )
 
-    info = { id: { literal: url },
+    info = { id: url,
              updated: date,
-             title: { literal: "The New Yorker" },
-             author: { literal: "Condé Nast" } }
-
-    entries = "section > div[class*=Layout__layoutContainer] div[class*=River__riverItemContent]"
+             title: "The New Yorker",
+             author: "Condé Nast" }
 
     entry = { id: link,
-              updated: date.merge({ repeat: true }),
-              title: "h4[class*=River__hed]",
-              author: "a[rel=author]",
+              updated: date,
+              title: Feedstock::Extract.new(selector: "h4[class*=River__hed]"),
+              author: Feedstock::Extract.new(selector:"a[rel=author]"),
               link: link,
-              summary: "h5[class*=River__dek]" }
+              summary: Feedstock::Extract.new(selector: "h5[class*=River__dek]") }
 
-    rules = { info: info, entries: entries, entry: entry }
+    entries = Feedstock::Extract.new(selector: "section > div[class*=Layout__layoutContainer] div[class*=River__riverItemContent]")
+
+    rules = { info: info, entry: entry, entries: entries}
 
     Feedstock.feed url, rules
   end

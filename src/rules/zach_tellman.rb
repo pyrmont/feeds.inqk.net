@@ -6,25 +6,27 @@ class ZachTellman
   def feed
     url = "https://ideolalia.com/essays.html"
 
-    link = { path: "a",
-             content: { attribute: "href" },
-             prepend: "https://ideolalia.com" }
+    link = Feedstock::Extract.new(
+      selector: "a",
+      content: { attribute: "href" },
+      prefix: "https://ideolalia.com"
+    )
 
-    info = { id: { literal: url },
-             updated: { literal: last_modified(url) },
-             title: { literal: "Zach Tellman: Essays" },
-             author: { literal: "Zach Tellman" } }
-
-    entries = "ul.posts > li"
+    info = { id: url,
+             updated: last_modified(url),
+             title: "Zach Tellman: Essays",
+             author: "Zach Tellman" }
 
     entry = { id: link,
-              updated: { literal: last_modified(url) },
-              title: "a",
-              author: { literal: "Zach Tellman" },
+              updated: last_modified(url),
+              title: Feedstock::Extract.new(selector: "a"),
+              author: "Zach Tellman",
               link: link,
-              summary: { literal: "An essay by Zach Tellman." } }
+              summary: "An essay by Zach Tellman." }
 
-    rules = { info: info, entries: entries, entry: entry }
+    entries = Feedstock::Extract.new(selector: "ul.posts > li")
+
+    rules = { info: info, entry: entry, entries: entries }
 
     Feedstock.feed url, rules
   end
