@@ -1,5 +1,5 @@
 *.swp
-/tmp/
 /src/.bundle
 /src/vendor/
 /public/*.xml
+/tmp/
