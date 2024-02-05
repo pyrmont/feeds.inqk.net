@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/pyrmont/feedstock.git
-  revision: badd7eed8186e8bdb605edd3e584c04a901fc30b
+  revision: 03aaadb3801160f711b3d67714844f69dd46d0a3
   specs:
     feedstock (0.4.0.pre.dev)
       nokogiri
@@ -9,14 +9,17 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    nokogiri (1.14.3-x86_64-darwin)
+    nokogiri (1.16.2-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.14.3-x86_64-linux)
+    nokogiri (1.16.2-x86_64-darwin)
       racc (~> 1.4)
-    racc (1.6.2)
+    nokogiri (1.16.2-x86_64-linux)
+      racc (~> 1.4)
+    racc (1.7.3)
     timeliness (0.4.5)
 
 PLATFORMS
+  arm64-darwin-23
   x86_64-darwin-22
   x86_64-linux
 
@@ -24,4 +27,4 @@ DEPENDENCIES
   feedstock!
 
 BUNDLED WITH
-   2.3.7
+   2.5.4
