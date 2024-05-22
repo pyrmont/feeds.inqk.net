@@ -7,13 +7,13 @@ class NewYorker
     url = "https://www.newyorker.com/magazine"
 
     date = Feedstock::Extract.new(
-      selector: "div[class*=MagazineHeader__header] h2",
+      selector: "p[class*=BundleHeaderDekText]",
       absolute: true,
       type: "datetime"
     )
 
     link = Feedstock::Extract.new(
-      selector: "div[class*=River__riverItemBody] > a",
+      selector: "a.summary-item__hed-link",
       content: { attribute: "href" },
       prefix: "https://www.newyorker.com"
     )
@@ -25,12 +25,12 @@ class NewYorker
 
     entry = { id: link,
               updated: date,
-              title: Feedstock::Extract.new(selector: "h4[class*=River__hed]"),
-              author: Feedstock::Extract.new(selector:"a[rel=author]"),
+              title: Feedstock::Extract.new(selector: "h3.summary-item__hed"),
+              author: Feedstock::Extract.new(selector:"span.byline__name"),
               link: link,
-              summary: Feedstock::Extract.new(selector: "h5[class*=River__dek]") }
+              summary: Feedstock::Extract.new(selector: "div.summary-item__dek") }
 
-    entries = Feedstock::Extract.new(selector: "section > div[class*=Layout__layoutContainer] div[class*=River__riverItemContent]")
+    entries = Feedstock::Extract.new(selector: "div[id*=reporting] div.summary-item__content")
 
     rules = { info: info, entry: entry, entries: entries}
 
