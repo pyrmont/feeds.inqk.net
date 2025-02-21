@@ -9,17 +9,18 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    nokogiri (1.16.5-arm64-darwin)
+    nokogiri (1.18.3-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-darwin)
+    nokogiri (1.18.3-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-linux)
+    nokogiri (1.18.3-x86_64-linux-gnu)
       racc (~> 1.4)
-    racc (1.8.0)
-    timeliness (0.4.5)
+    racc (1.8.1)
+    timeliness (0.5.2)
 
 PLATFORMS
   arm64-darwin-23
+  arm64-darwin-24
   x86_64-darwin-22
   x86_64-linux
 
@@ -27,4 +28,4 @@ DEPENDENCIES
   feedstock!
 
 BUNDLED WITH
-   2.5.4
+   2.6.2
