@@ -8,7 +8,7 @@ class ThePartyRoom
 
     info = { title: "The Party Room",
              link: "https://www.abc.net.au/listen/programs/politics-now/",
-             description: Feedstock::Extract.new(selector: "description"),
+             description: "Want to know what's really going on in Parliament House? Fran Kelly and Patricia Karvelas give you the political analysis that matters and explain what it means for you.",
              language: Feedstock::Extract.new(selector: "language"),
              copyright: Feedstock::Extract.new(selector: "copyright"),
              lastBuildDate: Feedstock::Extract.new(selector: "lastBuildDate"),
