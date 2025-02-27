@@ -33,8 +33,7 @@ class ThePartyRoom
   end
 
   def keep?(entry)
-    og_title = entry["title"].dup
-    entry["title"] = entry["title"].gsub!(" || The Party Room", "")
-    og_title.include? "|| The Party Room"
+    entry["title"].gsub!(" || The Party Room", "")
+    entry["description"].include? "on The Party Room"
   end
 end
