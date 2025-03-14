@@ -33,7 +33,8 @@ class ThePartyRoom
   end
 
   def keep?(entry)
+    old_title = entry["title"].dup
     entry["title"].gsub!(" || The Party Room", "")
-    entry["description"].include? "on The Party Room"
+    old_title.include?("|| The Party Room") || entry["description"].include?("on The Party Room")
   end
 end
