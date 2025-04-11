@@ -18,7 +18,7 @@ class ThePartyRoom
              itunes_keywords: Feedstock::Extract.new(selector: "itunes|keywords") }
 
     entry = { title: Feedstock::Extract.new(selector: "title"),
-              description: Feedstock::Extract.new(selector: "description"),
+              description: Feedstock::Extract.new(selector: "description", prefix: "<![CDATA[", suffix: "]]>"),
               enclosure: Feedstock::Extract.new(selector: "enclosure", content: "xml"),
               pubDate: Feedstock::Extract.new(selector: "pubDate"),
               guid: Feedstock::Extract.new(selector: "guid"),
@@ -35,6 +35,6 @@ class ThePartyRoom
   def keep?(entry)
     old_title = entry["title"].dup
     entry["title"].gsub!(" || The Party Room", "")
-    old_title.include?("|| The Party Room") || entry["description"].include?("on The Party Room")
+    old_title.include?("|| The Party Room") || entry["description"].include?("on\u00A0The Party Room")
   end
 end
