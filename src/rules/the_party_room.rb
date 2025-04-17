@@ -35,6 +35,9 @@ class ThePartyRoom
   def keep?(entry)
     old_title = entry["title"].dup
     entry["title"].gsub!(" || The Party Room", "")
-    old_title.include?("|| The Party Room") || entry["description"].include?("on\u00A0The Party Room")
+    return true if old_title.include?("|| The Party Room")
+    return true if entry["description"].include?("on\u00A0The Party Room")
+    return true if entry["description"].include?("joins Fran Kelly and Patricia Karvelas")
+    return false
   end
 end
