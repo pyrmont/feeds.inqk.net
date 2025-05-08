@@ -37,6 +37,7 @@ class ThePartyRoom
     entry["title"].gsub!(" || The Party Room", "")
     return true if old_title.include?("|| The Party Room")
     return true if entry["description"].include?("on\u00A0The Party Room")
+    return true if entry["description"].include?("on The Party Room")
     return true if entry["description"].include?("joins Fran Kelly and Patricia Karvelas")
     return true if entry["guid"].include?("/tpr-")
     return false
