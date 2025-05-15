@@ -23,7 +23,8 @@ class ThePartyRoom
               pubDate: Feedstock::Extract.new(selector: "pubDate"),
               guid: Feedstock::Extract.new(selector: "guid"),
               itunes_author: "Australian Broadcasting Corporation",
-              itunes_duration: Feedstock::Extract.new(selector: "itunes|duration") }
+              itunes_duration: Feedstock::Extract.new(selector: "itunes|duration"),
+              itunes_image: Feedstock::Extract.new(selector: "itunes|image", content: { attribute: "href" })}
 
     entries = Feedstock::Extract.new(selector: "item", filter: lambda { |entry| keep? entry })
 
@@ -33,13 +34,10 @@ class ThePartyRoom
   end
 
   def keep?(entry)
-    old_title = entry["title"].dup
     entry["title"].gsub!(" || The Party Room", "")
-    return true if old_title.include?("|| The Party Room")
-    return true if entry["description"].include?("on\u00A0The Party Room")
-    return true if entry["description"].include?("on The Party Room")
-    return true if entry["description"].include?("joins Fran Kelly and Patricia Karvelas")
-    return true if entry["guid"].include?("/tpr-")
+    image = entry["itunes_image"].dup
+    entry.delete("itunes_image")
+    return true if image.include?("6ddbbf2e265eb58a2ae6078c700660d7")
     return false
   end
 end
