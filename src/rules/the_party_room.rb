@@ -38,6 +38,7 @@ class ThePartyRoom
     image = entry["itunes_image"].dup
     entry.delete("itunes_image")
     return true if image.include?("6ddbbf2e265eb58a2ae6078c700660d7")
+    return true if image.include?("bc1c00e1181ac8d5da0318b95d060b77")
     return false
   end
 end
