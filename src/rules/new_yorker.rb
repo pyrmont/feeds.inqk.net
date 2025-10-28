@@ -26,7 +26,7 @@ class NewYorker
     entry = { id: link,
               updated: date,
               title: Feedstock::Extract.new(selector: "h3.summary-item__hed"),
-              author: Feedstock::Extract.new(selector:"span.byline__name"),
+              author: Feedstock::Extract.new(selector: "span.byline__name"),
               link: link,
               summary: Feedstock::Extract.new(selector: "div.summary-item__dek") }
 
