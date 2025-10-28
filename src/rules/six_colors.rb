@@ -6,17 +6,15 @@ class SixColors
   def feed
     url = "https://sixcolors.com/feed/"
 
-    info = { title: "Six Colors",
-             link: "https://sixcolors.com/feed",
-             description: Feedstock::Extract.new(selector: "description"),
-             language: Feedstock::Extract.new(selector: "language"),
-             lastBuildDate: Feedstock::Extract.new(selector: "lastBuildDate") }
+    info = { id: url,
+             updated: Feedstock::Extract.new(selector: "lastBuildDate"),
+             title: "Six Colors",
+             subtitle: Feedstock::Extract.new(selector: "description") }
 
-    entry = { title: Feedstock::Extract.new(selector: "title"),
-              description: Feedstock::Extract.new(selector: "description", type: "cdata"),
-              pubDate: Feedstock::Extract.new(selector: "pubDate"),
+    entry = { id: Feedstock::Extract.new(selector: "guid"),
+              updated: Feedstock::Extract.new(selector: "pubDate"),
+              title: Feedstock::Extract.new(selector: "title"),
               author: Feedstock::Extract.new(selector: "dc|creator"),
-              guid: Feedstock::Extract.new(selector: "guid"),
               link: Feedstock::Extract.new(selector: "link"),
               content: Feedstock::Extract.new(selector: "content|encoded", type: "cdata") }
 
