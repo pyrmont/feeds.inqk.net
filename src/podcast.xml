@@ -9,7 +9,7 @@
     <%- when "itunes_category" -%>
     <itunes:category text="<%= CGI.escapeHTML(value) %>"/>
     <%- when "itunes_image" -%>
-    <itunes:image href="<%= value %>"/>
+    <itunes:image href="<%= CGI.escapeHTML(value) %>"/>
     <%- when "itunes_keywords" -%>
     <itunes:keywords><%= CGI.escapeHTML(value) %></itunes:keywords>
     <%- else -%>
@@ -31,7 +31,7 @@
       <%- when "itunes_duration" -%>
       <itunes:duration><%= CGI.escapeHTML(value) %></itunes:duration>
       <%- when "itunes_image" -%>
-      <itunes:image href="<%= value %>"/>
+      <itunes:image href="<%= CGI.escapeHTML(value) %>"/>
       <%- else -%>
       <<%= name %>><%= CGI.escapeHTML(value) %></<%= name %>>
       <%- end -%>
