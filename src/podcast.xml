@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<% require 'cgi' -%>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
   <%- info.each do |name, value| -%>
     <%- case name -%>
     <%- when "itunes_author" -%>
-    <itunes:author><%= value %></itunes:author>
+    <itunes:author><%= CGI.escapeHTML(value) %></itunes:author>
     <%- when "itunes_category" -%>
-    <itunes:category text="<%= value %>"/>
+    <itunes:category text="<%= CGI.escapeHTML(value) %>"/>
     <%- when "itunes_image" -%>
     <itunes:image href="<%= value %>"/>
     <%- when "itunes_keywords" -%>
-    <itunes:keywords><%= value %></itunes:keywords>
+    <itunes:keywords><%= CGI.escapeHTML(value) %></itunes:keywords>
     <%- else -%>
-    <<%= name %>><%= value %></<%= name %>>
+    <<%= name %>><%= CGI.escapeHTML(value) %></<%= name %>>
     <%- end -%>
   <%- end -%>
   <%- entries.each do |entry| -%>
     <item>
     <%- entry.each do |name, value| -%>
       <%- case name -%>
+      <%- when "description" -%>
+      <<%= name %>><%= value %></<%= name %>>
       <%- when "enclosure" -%>
       <%= value %>
       <%- when "guid" -%>
       <guid isPermaLink="false"><%= value %></guid>
       <%- when "itunes_author" -%>
-      <itunes:author><%= value %></itunes:author>
+      <itunes:author><%= CGI.escapeHTML(value) %></itunes:author>
       <%- when "itunes_duration" -%>
-      <itunes:duration><%= value %></itunes:duration>
+      <itunes:duration><%= CGI.escapeHTML(value) %></itunes:duration>
       <%- when "itunes_image" -%>
       <itunes:image href="<%= value %>"/>
       <%- else -%>
-      <<%= name %>><%= value %></<%= name %>>
+      <<%= name %>><%= CGI.escapeHTML(value) %></<%= name %>>
       <%- end -%>
     <%- end -%>
     </item>
