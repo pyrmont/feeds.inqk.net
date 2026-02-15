@@ -27,6 +27,8 @@
       <itunes:author><%= value %></itunes:author>
       <%- when "itunes_duration" -%>
       <itunes:duration><%= value %></itunes:duration>
+      <%- when "itunes_image" -%>
+      <itunes:image href="<%= value %>"/>
       <%- else -%>
       <<%= name %>><%= value %></<%= name %>>
       <%- end -%>
