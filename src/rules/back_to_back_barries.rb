@@ -14,7 +14,7 @@ class BackToBackBarries
              lastBuildDate: Feedstock::Extract.new(selector: "lastBuildDate"),
              itunes_author: "Guardian Australia",
              itunes_category: Feedstock::Extract.new(selector: "itunes|category", content: { attribute: "text" }),
-             itunes_image: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/cf/fc/4a/cffc4a90-7944-7dec-5f40-94740811347e/mza_6801865328765384357.jpg/1200x1200bf-60.jpg" }
+             itunes_image: "https://i.guim.co.uk/img/media/c0eafecd02c1544567ad7de41b4ed4fad72e70c4/625_0_3750_3000/master/3750.jpg?width=1300&dpr=2&s=none&crop=none" }
 
     entry = { title: Feedstock::Extract.new(selector: "title"),
               description: Feedstock::Extract.new(selector: "description", prefix: "<![CDATA[", suffix: "]]>"),
