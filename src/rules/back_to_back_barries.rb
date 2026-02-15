@@ -10,7 +10,7 @@ class BackToBackBarries
              link: "https://www.theguardian.com/australia-news/series/full-story",
              description: "Barry Cassidy and Tony Barry break down big political questions.",
              language: Feedstock::Extract.new(selector: "language"),
-             copyright: Feedstock::Extract.new(selector: "copyright"),
+             copyright: Feedstock::Extract.new(selector: "copyright", prefix: "<![CDATA[", suffix: "]]>"),
              lastBuildDate: Feedstock::Extract.new(selector: "lastBuildDate"),
              itunes_author: "Guardian Australia",
              itunes_category: Feedstock::Extract.new(selector: "itunes|category", content: { attribute: "text" }),
