@@ -1,0 +1,31 @@
+; The 7 a.m. bulletin is titled 'マイあさ! 午前7時のNHKニュース <date>'. NHK
+; has written the 7 as '７' before, so the hour may be half-width or
+; full-width, zero-padded or not, or the kanji 七. The 時の after it
+; leaves out the hourly bulletins ('ニュース <date>午前07時00分').
+(def- seven-am
+  (peg/compile
+    `(to (* "午前" (any (+ "0" "０")) (+ "7" "７" "七") "時の"))))
+
+(def feed
+  {:url "https://www.nhk.or.jp/s-media/news/podcast/list/v1/all.xml"
+   :format :xml
+   :template :podcast
+   :info [[:title "NHK Radio News (Japanese)"]
+          [:link "https://www.nhk.or.jp/radionews/"]
+          [:description (extract "description")]
+          [:language (extract "language")]
+          [:copyright (extract "copyright")]
+          [:lastBuildDate (extract "lastBuildDate")]
+          [:itunes:author (extract "itunes|author")]
+          [:itunes:category (extract "itunes|category" :attr "text")]
+          [:itunes:image (extract "itunes|image" :attr "href")]
+          [:itunes:keywords (extract "itunes|keywords")]]
+   :entries (extract "item")
+   :entry [[:title (extract "title")]
+           [:description "The 7 o'clock news."]
+           [:enclosure (extract "enclosure" :content :xml)]
+           [:pubDate (extract "pubDate")]
+           [:guid (extract "guid")]
+           [:itunes:author "NHK (Japan Broadcasting Corporation)"]
+           [:itunes:duration (extract "itunes|duration")]]
+   :keep? (fn [e] (peg/match seven-am (e :title)))})
