@@ -47,6 +47,5 @@ hooks.yaml
 *.swp
 /public/
 !/public/.gitkeep
-/src/.bundle
-/src/vendor/
+/src/outputs
 /tmp/
