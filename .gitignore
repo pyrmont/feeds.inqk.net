@@ -41,6 +41,7 @@ Thumbs.db
 #################
 *.conf
 hooks.yaml
+hooks.edn
 
 # Miscellaneous #
 #################
