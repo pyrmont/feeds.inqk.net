@@ -1,0 +1,29 @@
+(def feed
+  {:url "https://www.abc.net.au/feeds/7288214/podcast.xml"
+   :format :xml
+   :template :podcast
+   :info [[:title "The Party Room"]
+          [:link "https://www.abc.net.au/listen/programs/politics-now/"]
+          [:description "Want to know what's really going on in Parliament House? Fran Kelly and Patricia Karvelas give you the political analysis that matters and explain what it means for you."]
+          [:language (extract "language")]
+          [:copyright (extract "copyright")]
+          [:lastBuildDate (extract "lastBuildDate")]
+          [:itunes:author "Australian Broadcasting Corporation"]
+          [:itunes:category (extract "itunes|category" :attr "text")]
+          [:itunes:image "https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/cf/fc/4a/cffc4a90-7944-7dec-5f40-94740811347e/mza_6801865328765384357.jpg/1200x1200bf-60.jpg"]
+          [:itunes:keywords (extract "itunes|keywords")]]
+   :entries (extract "item")
+   :entry [[:title (extract "title")]
+           [:description (extract "description" :type :cdata)]
+           [:enclosure (extract "enclosure" :content :xml)]
+           [:pubDate (extract "pubDate")]
+           [:guid (extract "guid")]
+           [:itunes:author "Australian Broadcasting Corporation"]
+           [:itunes:duration (extract "itunes|duration")]
+           [:itunes:image (extract "itunes|image" :attr "href")]]
+   ; Episodes of The Party Room have their own image.
+   :keep? (fn [e] (string/find "6ddbbf2e265eb58a2ae6078c700660d7" (e :itunes:image)))
+   :transform (fn [e]
+                (-> e
+                    (assoc :title (string/replace-all " || The Party Room" "" (e :title)))
+                    (dissoc :itunes:image)))})

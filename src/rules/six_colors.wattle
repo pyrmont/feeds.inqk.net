@@ -1,0 +1,21 @@
+(def- url "https://sixcolors.com/feed/")
+
+(def feed
+  {:url url
+   :format :xml
+   :info [[:id url]
+          [:updated (extract "lastBuildDate" :type :datetime)]
+          [:title "Six Colors"]
+          [:subtitle (extract "description")]]
+   :entries (extract "item")
+   ; Titles are text with the odd HTML reference (`Tom&#039;s`), as RSS
+   ; readers take them, so they are written as HTML.
+   :entry [[:id (extract "guid")]
+           [:updated (extract "pubDate" :type :datetime)]
+           [:title (extract "title" :type :cdata)]
+           [:author (extract "dc|creator")]
+           [:link (extract "link")]
+           [:content (extract "content|encoded" :type :cdata)]]
+   :keep? (fn [e]
+            (not (or (string/find "(Podcast)" (e :title))
+                     (string/find "(Sponsor)" (e :title)))))})

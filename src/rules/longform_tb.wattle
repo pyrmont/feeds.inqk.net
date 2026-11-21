@@ -1,0 +1,20 @@
+(def- url "https://longform.org/archive/writers/taffy-brodesser-akner")
+
+; Each date is a month and a year, such as "Mar 2016".
+(def- date (extract "span.post__date" :prefix "1 " :type :datetime))
+
+(def- link (extract "a.post__link" :attr "href"))
+
+(def feed
+  {:url url
+   :info [[:id url]
+          [:updated date]
+          [:title "Longform: Taffy Brodesser-Akner"]
+          [:author "Taffy Brodesser-Akner"]]
+   :entries (extract "article.post")
+   :entry [[:id link]
+           [:updated date]
+           [:title (extract "h2.post__title")]
+           [:author (extract "span.post__author")]
+           [:link link]
+           [:summary (extract "div.post__text")]]})

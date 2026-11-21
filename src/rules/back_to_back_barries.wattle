@@ -1,0 +1,23 @@
+(def feed
+  {:url "https://www.theguardian.com/australia-news/series/full-story/podcast.xml"
+   :format :xml
+   :template :podcast
+   :info [[:title "Back to Back Barries"]
+          [:link "https://www.theguardian.com/australia-news/series/full-story"]
+          [:description "Barry Cassidy and Tony Barry break down big political questions."]
+          [:language (extract "language")]
+          [:copyright (extract "copyright")]
+          [:lastBuildDate (extract "lastBuildDate")]
+          [:itunes:author "Guardian Australia"]
+          [:itunes:category (extract "itunes|category" :attr "text")]
+          [:itunes:image "https://i.guim.co.uk/img/media/c0eafecd02c1544567ad7de41b4ed4fad72e70c4/625_0_3750_3000/master/3750.jpg?width=1300&dpr=2&s=none&crop=none"]]
+   :entries (extract "item")
+   :entry [[:title (extract "title")]
+           [:description (extract "description" :type :cdata)]
+           [:enclosure (extract "enclosure" :content :xml)]
+           [:pubDate (extract "pubDate")]
+           [:guid (extract "guid")]
+           [:itunes:author "Guardian Australia"]
+           [:itunes:duration (extract "itunes|duration")]
+           [:itunes:image (extract "itunes|image" :attr "href")]]
+   :keep? (fn [e] (string/find "Back to Back Barries" (e :title)))})

@@ -1,0 +1,20 @@
+(def- url "https://www.newyorker.com/magazine")
+
+(def- date (extract "p[class*=BundleHeaderDekText]" :absolute true :type :datetime))
+
+(def- link (extract "a.summary-item__hed-link" :attr "href"
+                    :prefix "https://www.newyorker.com"))
+
+(def feed
+  {:url url
+   :info [[:id url]
+          [:updated date]
+          [:title "The New Yorker"]
+          [:author "Condé Nast"]]
+   :entries (extract "div[id*=reporting] div.summary-item__content")
+   :entry [[:id link]
+           [:updated date]
+           [:title (extract "h3.summary-item__hed")]
+           [:author (extract "span.byline__name")]
+           [:link link]
+           [:summary (extract "div.summary-item__dek")]]})

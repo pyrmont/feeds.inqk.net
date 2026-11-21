@@ -1,0 +1,20 @@
+(def- url "https://ideolalia.com/essays.html")
+
+(def- link (extract "a" :attr "href" :prefix "https://ideolalia.com"))
+
+; The page gives no dates, so each entry has the time the page last changed.
+(def- updated (header "Last-Modified" :type :datetime))
+
+(def feed
+  {:url url
+   :info [[:id url]
+          [:updated updated]
+          [:title "Zach Tellman: Essays"]
+          [:author "Zach Tellman"]]
+   :entries (extract "ul.posts > li")
+   :entry [[:id link]
+           [:updated updated]
+           [:title (extract "a")]
+           [:author "Zach Tellman"]
+           [:link link]
+           [:summary "An essay by Zach Tellman."]]})
