@@ -1,0 +1,39 @@
+(def- url "https://www.theatlantic.com/feed/magazine/")
+
+; Pieces of fewer words than this are left out. Letters, poems, art notes
+; and most columns and book reviews are shorter.
+(def- min-words 2000)
+
+(def- word-peg
+  (peg/compile `(any (+ (some (set " \t\r\n\f")) (<- (some (if-not (set " \t\r\n\f") 1)))))))
+
+(defn- text-of [html]
+  (markup/text (markup/parse html :html)))
+
+(defn- word-count [text]
+  (length (peg/match word-peg text)))
+
+; Each piece ends with a line naming its print edition, such as 'This short
+; story appears in the December 2026 print edition.'
+(defn- fiction? [text]
+  (string/find "This short story appears" text))
+
+(def feed
+  {:url url
+   :format :xml
+   :info [[:id url]
+          [:updated (extract "updated" :type :datetime)]
+          [:title "The Atlantic"]
+          [:author "The Atlantic Monthly Group"]]
+   :entries (extract "entry")
+   :entry [[:id (extract "id")]
+           [:updated (extract "published" :type :datetime)]
+           [:title (extract "title" :type :cdata)]
+           [:author (extract "author > name")]
+           [:link (extract "link" :attr "href")]
+           [:summary (extract "summary" :type :cdata)]
+           [:content (extract "content[type=html]" :type :cdata)]]
+   :keep? (fn [e]
+            (def text (text-of (e :content)))
+            (and (>= (word-count text) min-words)
+                 (not (fiction? text))))})
